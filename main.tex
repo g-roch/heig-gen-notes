@@ -3,6 +3,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[french]{babel}
+\usepackage{fullpage}
+\usepackage{tikz-uml}
+\usetikzlibrary{positioning}
 
 \title{GEN - Génie logiciel\\Notes de cours}
 \author{Gabriel Roch}
@@ -17,6 +20,56 @@
 \begin{abstract}
 \end{abstract}
 
-\chapter{}
+\chapter{Cycle de vie}
+\paragraph{Spécification} Défini ce que le logiciel doit faire (les besoins et \emph{pas} les solutions).
+\paragraph{Conception} Défini l’organisation du système (architecture du système et classes OO).
+\paragraph{Mise en oeuvre} Écriture du code.
+\paragraph{Validation} Vérifie que le logiciel répond aux spécifiation et aux attentes du client
+\paragraph{Évolution} Modifie le système en réponse aux nouveaux besoins
+
+\section{Modèle en cascade}
+
+\begin{figure}[h]
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      \umlusecase[x=0.0,y=-0,width=2.5cm,name=requir]{Requirements definition}
+      \umlusecase[x=2.5,y=-2,width=2.5cm,name=design]{System and software design}
+      \umlusecase[x=5.0,y=-4,width=2.5cm,name=implem]{Implementation and unit testing}
+      \umlusecase[x=7.5,y=-6,width=2.5cm,name=integr]{Integration and system testing}
+      \umlusecase[x=10,y=-7.5,width=2.5cm,name=operat]{Operation and maintenance}
+
+      \umluniassoc[geometry=-|]{requir}{design}
+      \umluniassoc[geometry=-|]{design}{implem}
+      \umluniassoc[geometry=-|]{implem}{integr}
+      \umluniassoc[geometry=-|]{integr}{operat}
+      \umluniassoc[geometry=-|]{operat}{integr}
+      \umluniassoc[geometry=-|]{operat}{implem}
+      \umluniassoc[geometry=-|]{operat}{design}
+      \umluniassoc[geometry=-|]{operat}{requir}
+      
+      \umlnote[y=+0,x=5.5,width=4.25cm]{requir}{Document de spécification, le plus détaillé possible}
+      \umlnote[y=-2,x=8.75,width=5.5cm]{design}{Architecture du système et conception détaillée: modules, API, ...}
+      \umlnote[y=-4,x=10,width=3cm]{implem}{Code du logiciel}
+      \umlnote[y=-6,x=13,width=2.4cm]{integr}{Version livrable du logiciel}
+    \end{tikzpicture}
+    \caption{Modèle en cascade}
+    \label{fig:waterfall-001}
+  \end{center}
+\end{figure}
+
+\paragraph{Avantage}
+\begin{itemize}
+  \item Développement linéaire
+  \item Permet la plannification et la coordination de grandes équipes à distance
+\end{itemize}
+\paragraph{Incovéniant}
+\begin{itemize}
+  \item Mal adapter au changement en cours de projet
+  \item Les phases se font l'une après l'autre
+  \item Le clients ne voit le résultat que tout à la fin
+\end{itemize}
+
+\section{Cycle en V}
+
 
 \end{document}
